@@ -38,14 +38,46 @@ def main():
     
     savepath = r'./豆瓣电影Top250.xls'
     # 3.保存数据
-    saveData(savepath)
+    # saveData(savepath)
+    
+    askURL('https://movie.douban.com/top250?start=')
     
 
 # 爬取网页    
 def getData(baseurl):
     datalist = []
-    # 2.逐一解析数据
+    for i in range(0, 10):  # 调用获取页面信息的函数，10次
+        url = baseurl.format(str(i * 25))
+        html = askURL(url)  # 保存获取到的网页源码
+        
+        # 2.逐一解析数据
+
+    
+    
+    
+    
     return datalist
+
+# 得到指定一个 URL 的网页内容
+def askURL(url):
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36 Edg/105.0.1343.50"
+    }
+    # 用户代理，表示，告诉豆瓣服务器，是什么类型的机器。
+    # 模拟浏览器头部信息，向 豆瓣服务器发送信息
+    request = urllib.request.Request(url=url, headers=headers)
+    html = ''
+    try:
+        response = urllib.request.urlopen(request)
+        html = response.read().decode('utf-8')
+        print(html)
+    except urllib.error.URLError as e:
+        if hasattr(e, "code"):   # hasattr() 函数用于判断对象是否包含对应的属性。
+            print(e.code)
+        if hasattr(e, "reason"):
+            print(e.reason)
+            
+    return html
     
 # 保存数据
 def saveData(savepath):

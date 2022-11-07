@@ -69,7 +69,7 @@ conn = sqlite3.connect("test.db")
 
 print("成功打开数据库")
 
-c = conn.cursor()  # 获取游戏标
+c = conn.cursor()  # 获取游标
 
 sql = "select id, name, address, salary from company"
 
